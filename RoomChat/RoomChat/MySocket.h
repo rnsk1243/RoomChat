@@ -35,7 +35,8 @@ public:
 	}
 
 	~CMySocket(){}
-
+	// Accept ÇÔ¼ö
+	SOCKET* Accept();
 	SOCKET* getServSock() { return hServSock; }
 
 	void err_display(char * msg)

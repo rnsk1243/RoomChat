@@ -13,36 +13,63 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{4055c6df-9d94-4425-9b66-0740bf588c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Channel">
+      <UniqueIdentifier>{ec5c464d-ac36-4eb4-acef-b3a3c69ba3bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Room">
+      <UniqueIdentifier>{a6361225-f318-4ced-b36b-43992414b2fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyInfo">
+      <UniqueIdentifier>{b49ca2d6-aa3a-447b-ab5b-fcf937af7f4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MySocket.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Accept.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="NetWork.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="RoomShift.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Channel.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="ChannelManager.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="MyInfo.h">
+      <Filter>MyInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Accept.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="NetWork.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="MySocket.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="RoomShift.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>Room</Filter>
+    </ClCompile>
+    <ClCompile Include="ChannelManager.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="MyInfo.cpp">
+      <Filter>MyInfo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -19,17 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Accept.h" />
+    <ClInclude Include="Channel.h" />
+    <ClInclude Include="MyInfo.h" />
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="NetWork.h" />
     <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomShift.h" />
+    <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="ChannelManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Accept.cpp" />
+    <ClCompile Include="Channel.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyInfo.cpp" />
+    <ClCompile Include="MySocket.cpp" />
     <ClCompile Include="NetWork.cpp" />
-    <ClCompile Include="RoomShift.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
+    <ClCompile Include="ChannelManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{31425A4A-21D7-421E-A8C3-DB037EB8B608}</ProjectGuid>

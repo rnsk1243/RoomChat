@@ -1,37 +1,58 @@
 #include "NetWork.h"
-#include<iostream>
-using namespace std;
 
 
-CNetWork::CNetWork()
-{
-	MS = new MessageRoomInfoStruct();
-}
 
+
+CNetWork::CNetWork(CRoomManager* roomManager, CChannelManager* channelManager)
+	:RoomManager(roomManager), ChannelManager(channelManager){}
 
 CNetWork::~CNetWork()
 {
-	delete MS;
-	cout << "CNetWork 객체 소멸" << endl;
+	cout << "CNetWork 객체 소멸자 호출" << endl;
 }
 
-int CNetWork::sendn(int flags)
+int CNetWork::sendn(CMyInfo* myInfo, int flags)
 {
-	if (MS->currentRoom == nullptr || MS->socket == nullptr)
+	if (myInfo->getMyChannel() == nullptr)
+	{
+		cout << "나의 채널객체를 찾을 수 없습니다." << endl;
 		return -1;
-	int temp = 0;
-	char* message = MS->message;
-	int* size = MS->sendRecvSize;
-	//cout << "보낼 메세지 = " << message << endl;
-	//cout << "보낼 사이즈 = " << *size << endl;
-	CRoom* room = MS->currentRoom;
-	list<SOCKET*>::iterator iterBegin = room->getRoomSocketList()->begin();
-	list<SOCKET*>::iterator iterEnd = room->getRoomSocketList()->end();
+	}
+	if (myInfo->getMessageStruct()->message == nullptr)
+		return -1;
+	
+	char* message = myInfo->getMessageStruct()->message;
+	int* size = myInfo->getMessageStruct()->sendRecvSize;
+	cout << "보낼 메세지 = " << message << endl;
+	cout << "보낼 사이즈 = " << *size << endl;
+
+	list<SOCKET*>::iterator iterBegin;
+	list<SOCKET*>::iterator iterEnd;
+
+	if (myInfo->getMyRoomNum() == -1)
+	{
+		// 채널 소켓 리스트 iter
+		iterBegin = myInfo->getMyChannel()->getChannelSocketList()->begin();
+		iterEnd = myInfo->getMyChannel()->getChannelSocketList()->end();
+	}
+	else
+	{
+		// 방 소켓 리스트 iter
+		if (myInfo->getMyRoom() == nullptr)
+		{
+			cout << "나의 방객체를 찾을 수 없습니다" << endl;
+			return -1;
+		}
+		iterBegin = myInfo->getMyRoom()->getRoomSocketList()->begin();
+		iterEnd = myInfo->getMyRoom()->getRoomSocketList()->end();
+	}
+
 	// 방에 있는 모든 사람에게 보내기
 	for (; iterBegin != iterEnd; ++iterBegin)
 	{
+		int temp = 0;
 		// 메시지 보낸 자신이면
-		if ((*iterBegin) == MS->socket)
+		if ((*iterBegin) == myInfo->getClientSocket())
 		{
 			continue; // 보내지 않고 통과
 		}
@@ -47,10 +68,11 @@ int CNetWork::sendn(int flags)
 	return 1;
 }
 
-int CNetWork::recvn(CRoomShift* roomShift, int flags)
+int CNetWork::recvn(CMyInfo* myInfo, int flags)
 {
 	char* temp = new char[4];
-	SOCKET* clientSocket = MS->socket;
+	SOCKET* clientSocket = myInfo->getClientSocket();
+	MessageStruct* MS = myInfo->getMessageStruct();
 	int isSuccess = recv(*clientSocket, temp, INT, flags);
 	
 	if (isSuccess == SOCKET_ERROR)
@@ -59,18 +81,14 @@ int CNetWork::recvn(CRoomShift* roomShift, int flags)
 		return SOCKET_ERROR;
 	}
 	*MS->sendRecvSize = *(int*)temp; 
-	/*
-	int * a = new int;
-	int b = 5;
-	a = &b //  b주소를 넣으면 원래 있던 a주소는 어디로 갈까?
-	*/
+
 	// 임시로 만든 temp 메모리 반환
 	delete temp;
 
 	int left = *MS->sendRecvSize;
 	while (left > 0)
 	{
-		isSuccess = recv(*clientSocket, MS->message, left, flags);
+		isSuccess += recv(*clientSocket, MS->message, left, flags);
 		//cout << "success = " << isSuccess << endl;
 		if (isSuccess == SOCKET_ERROR)
 		{
@@ -80,19 +98,26 @@ int CNetWork::recvn(CRoomShift* roomShift, int flags)
 		else if (isSuccess >= left)
 			break;
 	}
-	MS->socket = clientSocket;
 	MS->message[left] = '\0';
 
 	cout << "받은 메시지 = " << MS->message << endl;
-	
-	int roomNumber = atoi(MS->message); // message를 숫자로 변환하지 못하면 0을 반환
-	if (roomNumber)
+	char* ptr = strchr(MS->message, '/');
+	if (ptr != nullptr)
 	{
-		// message를 숫자로 반환 하는데 성공
-		MS->currentRoom = roomShift->roomShift(clientSocket, MS->currentRoom, roomNumber);
-		cout << MS->currentRoom->getRoomNo() << "번으로 방 옮김" << endl;
-		return 0;// thNetWork스레드 if문통과 않게 하여 sendn함수 미호출 유도를 위함
+		*ptr++;
+		if (*ptr == 'l')
+		{
+			cout << "방 리스트 출력" << endl;
+		}
+		else if (*ptr == 'c')
+		{
+			cout << "채널 리스트 출력" << endl;
+		}
+		else if (*ptr == 'm')
+		{
+			cout << "방 만들기" << endl;
+		}
+		return 0;
 	}
-
 	return 1;
 }

@@ -1,0 +1,10 @@
+﻿  main.cpp
+e:\7week\roomchat\roomchat\roomchat\mysocket.h(51): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'LPCTSTR'입니다.
+  e:\7week\roomchat\roomchat\roomchat\mysocket.h(51): note: 서식 문자열에서 '%ls'을(를) 사용하는 것이 좋습니다.
+  e:\7week\roomchat\roomchat\roomchat\mysocket.h(51): note: 서식 문자열에서 '%lls'을(를) 사용하는 것이 좋습니다.
+  e:\7week\roomchat\roomchat\roomchat\mysocket.h(51): note: 서식 문자열에서 '%Ls'을(를) 사용하는 것이 좋습니다.
+  e:\7week\roomchat\roomchat\roomchat\mysocket.h(51): note: 서식 문자열에서 '%ws'을(를) 사용하는 것이 좋습니다.
+  ChannelManager.cpp
+  코드를 생성하고 있습니다...
+  RoomChat.vcxproj -> E:\7week\RoomChat\RoomChat\Debug\RoomChat.exe
+  RoomChat.vcxproj -> E:\7week\RoomChat\RoomChat\Debug\RoomChat.pdb (Full PDB)

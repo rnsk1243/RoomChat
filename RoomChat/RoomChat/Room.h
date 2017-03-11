@@ -6,14 +6,16 @@ using namespace std;
 
 class CRoom
 {
+	char* RoomName;
 	int RoomNo;
 	list<SOCKET*>* RoomSocketList;
 	// RoomSocketList 추가 삭제를 위한 임계역역
 	CRITICAL_SECTION* CS;
 public:
 
-	CRoom(int roomNo)
+	CRoom(int roomNo, char* roomName)
 	{
+		RoomName = roomName;
 		CS = new CRITICAL_SECTION();
 		RoomNo = roomNo;
 		RoomSocketList = new list<SOCKET*>();
